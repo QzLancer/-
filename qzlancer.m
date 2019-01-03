@@ -82,6 +82,27 @@ for i = 1:(length(a6))
     a6(i) = (w6(i+1)-w6(i))/dT;
 end 
 
+VEx = zeros(length(Ex)-1,1);
+for i = 1:(length(VEx))
+    VEx(i) = (Ex(i+1)-Ex(i))/dT;
+end 
+VEy = zeros(length(Ey)-1,1);
+for i = 1:(length(VEy))
+    VEy(i) = (Ey(i+1)-Ey(i))/dT;
+end 
+VE = sqrt(VEx.^2+VEy.^2);
+
+aEx = zeros(length(VEx)-1,1);
+for i = 1:(length(aEx))
+    aEx(i) = (VEx(i+1)-VEx(i))/dT;
+end 
+aEy = zeros(length(VEy)-1,1);
+for i = 1:(length(aEx))
+    aEx(i) = (VEy(i+1)-VEy(i))/dT;
+end 
+aE = sqrt(aEx.^2+aEy.^2);
+
+
 Ax = 0;
 Ay = 0;
 Bx = AB.*cos(theta1);
@@ -142,30 +163,36 @@ Gy = G(2);
 % plot(theta1(3:length(a6)),a6(3:length(a6)));
 % title('α6');
 
-% figure(5)
-% hold on
-% for i=1:580
-%     plot(Ex(i),Ey(i),'.')
+% figure(5);
+% subplot 131;
+% plot(theta1(1:length(VE)),VE);
+% title('E点速度');
+% xlabel('θ');
+% ylabel('v(mm/s)');
+% subplot 132;
+% plot(theta1(1:length(aE)),aE);
+% title('E点加速度');
+% xlabel('θ');
+% ylabel('a(mm/s^2)');
+
+% figure(6)
+% for  i=1:580
+%     plot([Ax,Bx(i),Cx(i)],[Ay,By(i),Cy(i)],'k',[Dx,Cx(i),Ex(i)],[Dy,Cy(i),Ey(i)],'k',...
+%         [Gx,Fx(i),Ex(i)],[Gy,Fy(i),Ey(i)],'k', Ax,Ay,'^b',Bx(i),By(i),'bo',Cx(i),Cy(i),'bo',...
+%         Dx,Dy,'b^',Ex(i),Ey(i),'bo',Fx(i),Fy(i),'bo',Gx,Gy,'^b');
+%     axis([-50 170 -50 170])
+% 
+%     pause(0.01);
 % end
 
-figure(6)
-
-
-for  i=1:580
-
-    plot([Ax,Bx(i),Cx(i),Dx,Ex(i),Fx(i),Gx],[Ay,By(i),Cy(i),Dy,Ey(i),Fy(i),Gy],'k');
-    axis([-50 170 -20 100])
-
-    pause(0.01);
-end
-
-
-    
-% figure(2);
-% plot(theta1,theta3);
-% figure(3)
-% plot(theta1,GEY);
-% figure(4)
-% plot(theta1,theta5);
-% figure(5)
-% plot(theta1,theta6);
+figure(7)
+subplot 131
+plot(theta1,theta1,'k');
+title('θ1');
+subplot 132
+plot(theta1,zeros(length(theta1))+1,'k');
+title('w1');
+subplot 133
+plot(theta1,zeros(length(theta1)),'k');
+title('α1');
+subplot 131
