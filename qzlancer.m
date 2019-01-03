@@ -49,10 +49,10 @@ for i = 1:(length(a3))
     a3(i) = (w3(i+1)-w3(i))/dT;
 end 
 %-----------------------------------------
-Xe = L1*cos(theta1)+L2*cos(theta2)+L2_*cos(pi/3-theta2);
-Ye = L1*sin(theta1)+L2*sin(theta2)-L2_*sin(pi/3-theta2);
-GE = sqrt((Xe-G(1)).^2+(Ye-G(2)).^2);
-GEY = atan((G(2)-Ye)./(G(1)-Xe));
+Ex = L1*cos(theta1)+L2*cos(theta2)+L2_*cos(pi/3-theta2);
+Ey = L1*sin(theta1)+L2*sin(theta2)-L2_*sin(pi/3-theta2);
+GE = sqrt((Ex-G(1)).^2+(Ey-G(2)).^2);
+GEY = atan((G(2)-Ey)./(G(1)-Ex));
 for j=1:314
     if GEY(j) < 0
         GEY(j) = pi+GEY(j);
@@ -82,57 +82,84 @@ for i = 1:(length(a6))
     a6(i) = (w6(i+1)-w6(i))/dT;
 end 
 
+Ax = 0;
+Ay = 0;
+Bx = AB.*cos(theta1);
+By = AB.*sin(theta1);
+Cx = Bx + L2.*cos(theta2);
+Cy = By + L2.*sin(theta2);
+Dx = L4;
+Dy = 0;
+Fx = Ex + L5.*cos(theta5);
+Fy = Ey + L5.*sin(theta5);
+Gx = G(1);
+Gy = G(2);
 
 %---------------------------------»æÍ¼-
-figure(1);
-subplot 131
-plot(theta1,theta2);
-title('¦È2');
-subplot 132
-plot(theta1(1:length(w2)),w2);
-title('w2');
-subplot 133
-plot(theta1(1:length(a2)),a2);
-title('¦Á2');
+% figure(1);
+% subplot 131
+% plot(theta1,theta2);
+% title('¦È2');
+% subplot 132
+% plot(theta1(1:length(w2)),w2);
+% title('w2');
+% subplot 133
+% plot(theta1(1:length(a2)),a2);
+% title('¦Á2');
+% 
+% figure(2);
+% subplot 131
+% plot(theta1,theta3);
+% title('¦È3');
+% subplot 132
+% plot(theta1(1:length(w3)),w3);
+% title('w3');
+% subplot 133
+% plot(theta1(1:length(a3)),a3);
+% title('¦Á3');
+% 
+% 
+% figure(3);
+% subplot 131
+% plot(theta1,theta5);
+% title('¦È5');
+% subplot 132
+% plot(theta1(1:length(w5)),w5);
+% title('w5');
+% subplot 133
+% plot(theta1(3:length(a5)),a5(3:length(a5)));
+% title('¦Á5');
+% 
+% 
+% figure(4);
+% subplot 131
+% plot(theta1,theta6);
+% title('¦È6');
+% subplot 132
+% plot(theta1(1:length(w6)),w6);
+% title('w6');
+% subplot 133
+% plot(theta1(3:length(a6)),a6(3:length(a6)));
+% title('¦Á6');
 
-figure(2);
-subplot 131
-plot(theta1,theta3);
-title('¦È3');
-subplot 132
-plot(theta1(1:length(w3)),w3);
-title('w3');
-subplot 133
-plot(theta1(1:length(a3)),a3);
-title('¦Á3');
+% figure(5)
+% hold on
+% for i=1:580
+%     plot(Ex(i),Ey(i),'.')
+% end
+
+figure(6)
 
 
-figure(3);
-subplot 131
-plot(theta1,theta5);
-title('¦È5');
-subplot 132
-plot(theta1(1:length(w5)),w5);
-title('w5');
-subplot 133
-plot(theta1(1:length(a5)),a5);
-title('¦Á5');
+for  i=1:580
+
+    plot([Ax,Bx(i),Cx(i),Dx,Ex(i),Fx(i),Gx],[Ay,By(i),Cy(i),Dy,Ey(i),Fy(i),Gy],'k');
+    axis([-50 170 -20 100])
+
+    pause(0.01);
+end
 
 
-figure(4);
-subplot 131
-plot(theta1,theta6);
-title('¦È6');
-subplot 132
-plot(theta1(1:length(w6)),w6);
-title('w6');
-subplot 133
-plot(theta1(1:length(a6)),a6);
-title('¦Á6');
-
-figure(5)
-hold on
-for i=1:580
     
 % figure(2);
 % plot(theta1,theta3);
