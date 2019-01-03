@@ -27,11 +27,28 @@ CBD = acos((L2^2+BD.^2-L3^2)./(2*L2*BD));
 theta2_1 = ABD(1:315)+CBD(1:315)-(pi-theta1_1);
 theta2_2 = CBD(316:580)-ABD(316:580)+(theta1_2-pi);
 theta2 = [theta2_1,theta2_2];
-
+w2 = zeros(length(theta2)-1,1);
+for i = 1:(length(w2))
+    w2(i) = (theta2(i+1)-theta2(i))/dT;
+end 
+a2 = zeros(length(w2)-1,1);
+for i = 1:(length(a2))
+    a2(i) = (w2(i+1)-w2(i))/dT;
+end 
+%----------------------------------------
 theta3_1 = pi-ADB(1:315)-BDC(1:315);
-theta3_2 = pi + ADB(316:579)-BDC(316:579);
+theta3_2 = pi + ADB(316:580)-BDC(316:580);
 theta3 = [theta3_1,theta3_2];
 
+w3 = zeros(length(theta3)-1,1);
+for i = 1:(length(w3))
+    w3(i) = (theta3(i+1)-theta3(i))/dT;
+end 
+a3 = zeros(length(w3)-1,1);
+for i = 1:(length(a3))
+    a3(i) = (w3(i+1)-w3(i))/dT;
+end 
+%-----------------------------------------
 Xe = L1*cos(theta1)+L2*cos(theta2)+L2_*cos(pi/3-theta2);
 Ye = L1*sin(theta1)+L2*sin(theta2)-L2_*sin(pi/3-theta2);
 GE = sqrt((Xe-G(1)).^2+(Ye-G(2)).^2);
@@ -45,14 +62,83 @@ FGE = acos((GE.^2+L6^2-L5^2)./(2*GE*L6));
 FEG = acos((GE.^2-L6^2+L5^2)./(2*GE*L5));
 theta5 = GEY-FEG;
 theta6 = FGE+GEY-pi;
-%---------------------------------»æÍ¼
-% figure(1);
-% plot(theta1,theta2);
+
+
+w5 = zeros(length(theta5)-1,1);
+for i = 1:(length(w5))
+    w5(i) = (theta5(i+1)-theta5(i))/dT;
+end 
+a5 = zeros(length(w5)-1,1);
+for i = 1:(length(a5))
+    a5(i) = (w5(i+1)-w5(i))/dT;
+end 
+
+w6 = zeros(length(theta6)-1,1);
+for i = 1:(length(w6))
+    w6(i) = (theta6(i+1)-theta6(i))/dT;
+end 
+a6 = zeros(length(w6)-1,1);
+for i = 1:(length(a6))
+    a6(i) = (w6(i+1)-w6(i))/dT;
+end 
+
+
+%---------------------------------»æÍ¼-
+figure(1);
+subplot 131
+plot(theta1,theta2);
+title('¦È2');
+subplot 132
+plot(theta1(1:length(w2)),w2);
+title('w2');
+subplot 133
+plot(theta1(1:length(a2)),a2);
+title('¦Á2');
+
+figure(2);
+subplot 131
+plot(theta1,theta3);
+title('¦È3');
+subplot 132
+plot(theta1(1:length(w3)),w3);
+title('w3');
+subplot 133
+plot(theta1(1:length(a3)),a3);
+title('¦Á3');
+
+
+figure(3);
+subplot 131
+plot(theta1,theta5);
+title('¦È5');
+subplot 132
+plot(theta1(1:length(w5)),w5);
+title('w5');
+subplot 133
+plot(theta1(1:length(a5)),a5);
+title('¦Á5');
+
+
+figure(4);
+subplot 131
+plot(theta1,theta6);
+title('¦È6');
+subplot 132
+plot(theta1(1:length(w6)),w6);
+title('w6');
+subplot 133
+plot(theta1(1:length(a6)),a6);
+title('¦Á6');
+
+figure(5)
+hold on
+for i=1:580
+    
 % figure(2);
 % plot(theta1,theta3);
-figure(3)
-plot(theta1,GEY);
-figure(4)
-plot(theta1,theta5);
-figure(5)
-plot(theta1,theta6);
+% figure(3)
+% plot(theta1,GEY);
+% figure(4)
+% plot(theta1,theta5);
+% figure(5)
+% plot(theta1,theta6);
